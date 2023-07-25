@@ -1,0 +1,910 @@
+definitions:
+  http.Response:
+    properties:
+      data: {}
+      description:
+        type: string
+      status:
+        type: string
+    type: object
+  models.Branch:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      director:
+        type: string
+      groups_quantity:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  models.BranchUpdate:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      director:
+        type: string
+      groups_quantity:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  models.CreateBranchRequest:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      director:
+        type: string
+      groups_quantity:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.CreateGroupRequest:
+    properties:
+      branch_id:
+        type: string
+      closed_at:
+        type: string
+      created_at:
+        type: string
+      name:
+        type: string
+      students_quantity:
+        type: integer
+      teacher:
+        type: string
+    type: object
+  models.CreateStudentRequest:
+    properties:
+      branch_id:
+        type: string
+      coordinator:
+        type: string
+      created_at:
+        type: string
+      first_name:
+        type: string
+      graduated_at:
+        type: string
+      group_id:
+        type: string
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      student_id:
+        type: string
+      teacher:
+        type: string
+    type: object
+  models.GetBranchListResponse:
+    properties:
+      branches:
+        items:
+          $ref: '#/definitions/models.Branch'
+        type: array
+      count:
+        type: integer
+    type: object
+  models.GetGroupListResponse:
+    properties:
+      count:
+        type: integer
+      groups:
+        items:
+          $ref: '#/definitions/models.Group'
+        type: array
+    type: object
+  models.GetStudentListResponse:
+    properties:
+      count:
+        type: integer
+      students:
+        items:
+          $ref: '#/definitions/models.Student'
+        type: array
+    type: object
+  models.Group:
+    properties:
+      branch_id:
+        type: string
+      closed_at:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      students_quantity:
+        type: integer
+      teacher:
+        type: string
+    type: object
+  models.GroupUpdate:
+    properties:
+      branch_id:
+        type: string
+      closed_at:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      students_quantity:
+        type: integer
+      teacher:
+        type: string
+    type: object
+  models.Response:
+    properties:
+      text:
+        type: string
+    type: object
+  models.Student:
+    properties:
+      branch_id:
+        type: string
+      coordinator:
+        type: string
+      created_at:
+        type: string
+      first_name:
+        type: string
+      graduated_at:
+        type: string
+      group_id:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      student_id:
+        type: string
+      teacher:
+        type: string
+    type: object
+  models.StudentUpdate:
+    properties:
+      branch_id:
+        type: string
+      coordinator:
+        type: string
+      first_name:
+        type: string
+      graduated_at:
+        type: string
+      group_id:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      student_id:
+        type: string
+      teacher:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a api gateway
+paths:
+  /branch:
+    get:
+      consumes:
+      - application/json
+      description: Get branch List
+      operationId: get_branch_list
+      parameters:
+      - in: query
+        name: limit
+        type: integer
+      - in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetBranchListResponse
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.GetBranchListResponse'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get branch List
+      tags:
+      - branch
+    post:
+      consumes:
+      - application/json
+      description: Create Branch
+      operationId: create_branch
+      parameters:
+      - description: Branch
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateBranchRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Module data
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Branch'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Create Branch
+      tags:
+      - branch
+  /branch/{branch_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Branch
+      operationId: delete_branch
+      parameters:
+      - description: branch_id
+        in: path
+        name: branch_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Response
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Response'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Delete Branch
+      tags:
+      - branch
+    get:
+      consumes:
+      - application/json
+      description: Get Single Branch
+      operationId: get_branch
+      parameters:
+      - description: branch_id
+        in: path
+        name: branch_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Branch
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Branch'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get Single Branch
+      tags:
+      - branch
+    put:
+      consumes:
+      - application/json
+      description: Update Branch
+      operationId: update_branch
+      parameters:
+      - description: branch_id
+        in: path
+        name: branch_id
+        required: true
+        type: string
+      - description: Branch
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/models.BranchUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Response
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Response'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Update Branch
+      tags:
+      - branch
+  /group:
+    get:
+      consumes:
+      - application/json
+      description: Get group List
+      operationId: get_group_list
+      parameters:
+      - in: query
+        name: branch_id
+        type: string
+      - in: query
+        name: limit
+        type: integer
+      - in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetGroupListResponse
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.GetGroupListResponse'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get group List
+      tags:
+      - group
+    post:
+      consumes:
+      - application/json
+      description: Create Group
+      operationId: create_group
+      parameters:
+      - description: Group
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateGroupRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Module data
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Group'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Create Group
+      tags:
+      - group
+  /group/{group_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Group
+      operationId: delete_group
+      parameters:
+      - description: group_id
+        in: path
+        name: group_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Response
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Response'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Delete Group
+      tags:
+      - group
+    get:
+      consumes:
+      - application/json
+      description: Get Single Group
+      operationId: get_group
+      parameters:
+      - description: group_id
+        in: path
+        name: group_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Group
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Group'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get Single Group
+      tags:
+      - group
+    put:
+      consumes:
+      - application/json
+      description: Update Group
+      operationId: update_group
+      parameters:
+      - description: group_id
+        in: path
+        name: group_id
+        required: true
+        type: string
+      - description: Group
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/models.GroupUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Response
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Response'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Update Group
+      tags:
+      - group
+  /student:
+    get:
+      consumes:
+      - application/json
+      description: Get student List
+      operationId: get_student_list
+      parameters:
+      - in: query
+        name: branch_id
+        type: string
+      - in: query
+        name: group_id
+        type: string
+      - in: query
+        name: limit
+        type: integer
+      - in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetStudentListResponse
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.GetStudentListResponse'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get student List
+      tags:
+      - student
+    post:
+      consumes:
+      - application/json
+      description: Create Student
+      operationId: create_student
+      parameters:
+      - description: Student
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateStudentRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Module data
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Branch'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Create Student
+      tags:
+      - student
+  /student/{student_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Student
+      operationId: delete_student
+      parameters:
+      - description: student_id
+        in: path
+        name: student_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Response
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Response'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Delete Student
+      tags:
+      - student
+    get:
+      consumes:
+      - application/json
+      description: Get Single Student
+      operationId: get_student
+      parameters:
+      - description: student_id
+        in: path
+        name: student_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Student
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Student'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get Single Student
+      tags:
+      - student
+    put:
+      consumes:
+      - application/json
+      description: Update Student
+      operationId: update_student
+      parameters:
+      - description: student_id
+        in: path
+        name: student_id
+        required: true
+        type: string
+      - description: Student
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/models.StudentUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Response
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Response'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Update Student
+      tags:
+      - student
+swagger: "2.0"
