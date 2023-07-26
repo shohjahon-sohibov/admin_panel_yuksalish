@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
+	// "fmt"
 	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -29,16 +29,10 @@ func main() {
 		loggerLevel = logger.LevelInfo
 	}
 
-	// credential := options.Credential{
-	// 	Username:      cfg.MongoUser,
-	// 	// Password:      cfg.MongoPassword,
-	// 	// AuthMechanism: "SCRAM-SHA-256",
-	// 	AuthSource:    cfg.MongoDatabase,
-	// }
+	mongoString := "mongodb+srv://shohjahon:9suQpK8sFAQPOMLF@cluster0.q1xijde.mongodb.net/"
 
-	mongoString := fmt.Sprintf("mongodb://%s:%d", cfg.MongoHost, cfg.MongoPort)
 	log.Println("MAIN TEST PRINT " + mongoString)
-	mongoConn, err := mongo.Connect(context.Background(), options.Client().ApplyURI(mongoString)) // .SetAuth(credential)
+	mongoConn, err := mongo.Connect(context.Background(), options.Client().ApplyURI(mongoString))
 	if err != nil {
 		log.Fatal("error to connect to mongo database", logger.Error(err))
 	}

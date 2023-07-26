@@ -65,29 +65,18 @@ func Load() Config {
 	config.Environment = cast.ToString(getOrReturnDefaultValue("ENVIRONMENT", DebugMode))
 	config.Version = cast.ToString(getOrReturnDefaultValue("VERSION", "1.0"))
 
-	config.HTTPPort = cast.ToString(getOrReturnDefaultValue("HTTP_PORT", ":3000"))
-	config.HTTPScheme = cast.ToString(getOrReturnDefaultValue("HTTP_SCHEME", "http")) // brat ci cd togrilab qoydim change qilish kerak emas uje
+	config.HTTPPort = cast.ToString(getOrReturnDefaultValue("HTTP_PORT", ":8080"))
+	config.HTTPScheme = cast.ToString(getOrReturnDefaultValue("HTTP_SCHEME", "http"))
 
-	config.RPCPort = cast.ToString(getOrReturnDefaultValue("RPC_PORT", ":5004"))
-
-	config.SecretKey = cast.ToString(getOrReturnDefaultValue("SECRET_KEY", ""))
-
-	config.MongoHost = cast.ToString(getOrReturnDefaultValue("MONGO_HOST", "localhost")) 
+	config.MongoHost = cast.ToString(getOrReturnDefaultValue("MONGO_HOST", "cluster0.q1xijde")) 
 	config.MongoPort = cast.ToInt(getOrReturnDefaultValue("MONGO_PORT", 27017)) 
 	config.MongoUser = cast.ToString(getOrReturnDefaultValue("MONGO_USER", "shohjahon"))
-	config.MongoPassword = cast.ToString(getOrReturnDefaultValue("MONGO_PASSWORD", "1"))
+	config.MongoPassword = cast.ToString(getOrReturnDefaultValue("MONGO_PASSWORD", "9suQpK8sFAQPOMLF"))
 	config.MongoDatabase = cast.ToString(getOrReturnDefaultValue("MONGO_DATABASE", "admin_panel"))
 
-	// config.MinioAccessKeyID = cast.ToString(getOrReturnDefaultValue("MINIO_ACCESS_KEY", "access_key"))
-	// config.MinioSecretAccessKey = cast.ToString(getOrReturnDefaultValue("MINIO_SECRET_KEY", "secret_key"))
-	// config.MinioEndpoint = cast.ToString(getOrReturnDefaultValue("MINIO_ENDPOINT", "url"))
-	// config.MinioSSL = cast.ToBool(getOrReturnDefaultValue("MINIO_SSL", true))
 
 	config.DefaultOffset = cast.ToString(getOrReturnDefaultValue("DEFAULT_OFFSET", "0")) // 64a92d75a4135b099e1679e3
 	config.DefaultLimit = cast.ToString(getOrReturnDefaultValue("DEFAULT_LIMIT", "10")) // 64a85eaea4135b099e167977
-	// config.SMSUserLogin = cast.ToString(getOrReturnDefaultValue("SMS_USER_LOGIN", "admin@mediapark.uz"))
-	// config.SMSUserPassword = cast.ToString(getOrReturnDefaultValue("SMS_USER_PASSWORD", "cok1S4MSLsmxRYfPOuTlkXsaxQOSoRAamhsmEK9o"))
-	// config.SMSSender = cast.ToString(getOrReturnDefaultValue("SMS_SENDER", "Mediapark"))
 	return config
 }
 
