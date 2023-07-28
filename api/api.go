@@ -1,7 +1,6 @@
 package api
 
 import (
-	"freelance/admin_panel/api/docs"
 	"freelance/admin_panel/api/handlers"
 	"freelance/admin_panel/config"
 
@@ -15,11 +14,6 @@ import (
 func SetUpRouter(h handlers.Handler, cfg config.Config) (r *gin.Engine) {
 	r = gin.New()
 	r.Use(gin.Logger(), gin.Recovery())
-
-	docs.SwaggerInfo.Title = cfg.ServiceName
-	docs.SwaggerInfo.Version = cfg.Version
-	// docs.SwaggerInfo.Host = cfg.ServiceHost + cfg.HTTPPort
-	docs.SwaggerInfo.Schemes = []string{cfg.HTTPScheme}
 
 	r.Use(customCORSMiddleware())
 
